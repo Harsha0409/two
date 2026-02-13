@@ -1,0 +1,78 @@
+/* Peach background and centered card */
+:root{
+  --peach:#ffd8c6;
+  --accent:#ff6b81;
+  --card-bg:rgba(255,255,255,0.85);
+}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--peach);
+  font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.center{width:100%;display:flex;align-items:center;justify-content:center;padding:4vw;}
+.card{
+  width:clamp(320px, 90vw, 520px);
+  max-width:90vw;
+  background:var(--card-bg);
+  border-radius:18px;
+  padding:2.4rem 1.6rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  text-align:center;
+  overflow:hidden;
+}
+.gif-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.gif-wrap img{
+  width:clamp(120px,36vw,220px);
+  height:auto;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+  transform-origin:center center;
+  animation: floaty 3s ease-in-out infinite;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+@keyframes floaty{
+  0%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-8px) scale(1.02);}
+  100%{transform:translateY(0) scale(1);}
+}
+h1{font-size:clamp(1.2rem, 2.4vw, 1.8rem);margin:1rem 0 0.8rem;color:#4a2f2f}
+.btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;align-items:center}
+.btn{padding:0.75rem 1rem;border-radius:10px;border:0;font-size:clamp(0.9rem,1.8vw,1rem);cursor:pointer;min-width:96px}
+.yes{white-space:nowrap}
+.btn:focus{outline:3px solid rgba(255,107,129,0.22)}
+.yes{background:var(--accent);color:white;box-shadow:0 6px 14px rgba(255,107,129,0.24)}
+.no{background:transparent;border:2px solid rgba(0,0,0,0.08);color:#4a2f2f}
+.note{margin-top:0.8rem;font-weight:600;color:#4a2f2f}
+
+/* heart animation */
+.hearts{position:absolute;left:50%;top:10%;transform:translateX(-50%);pointer-events:none;width:100%;height:100%;overflow:visible}
+.heart{
+  position:absolute;
+  width:28px;height:28px;
+  transform-origin:center center;
+  background:var(--accent);
+  clip-path:path('M14 4c-1.9 0-3.7 1.2-4 3-.3-1.8-2.1-3-4-3C3 4 0 6.6 0 10c0 6 14 14 14 14s14-8 14-14c0-3.4-3-6-6-6-1.9 0-3.7 1.2-4 3-.3-1.8-2.1-3-4-3z');
+  opacity:0.95;
+}
+@keyframes heart-rise{
+  0%{transform:translateY(0) scale(0.9);opacity:1}
+  60%{opacity:1}
+  100%{transform:translateY(-140px) scale(1.2);opacity:0}
+}
+
+/* ensure everything stays inside viewport */
+@media (max-width:360px){
+  .btn{min-width:80px;padding:0.6rem 0.8rem}
+  .gif-wrap img{max-width:180px}
+}

@@ -7,7 +7,17 @@ const cute = document.getElementById('cute');
 // phone number to receive SMS; using international format
 const ALERT_NUMBER = '+917670874133';
 
+// basic mobile detection — only attempt sms: navigation on mobile devices
+const isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
 function sendSmsLink(message) {
+  if (!isMobile) {
+    // On desktop browsers `sms:` often does nothing or blocks further script execution.
+    // Skip navigation and log so the UI interactions remain responsive on desktop.
+    console.info('Skipping sms: navigation on non-mobile device. Message:', message);
+    return;
+  }
+
   try {
     const uri = `sms:${ALERT_NUMBER}?body=${encodeURIComponent(message)}`;
     // open the SMS composer on mobile devices
@@ -39,8 +49,7 @@ if (noBtn) noBtn.addEventListener('click', handleNo);
 if (yesBtn) yesBtn.addEventListener('click', handleYes);
 
 function handleYes() {
-  // notify via SMS (opens SMS composer on user's device)
-  sendSmsLink('Someone clicked YES on your valentine page');
+  // Update UI first, then attempt to open SMS composer on mobile (delayed)
   // Always change the image (with fade)
   if (cute) {
     const newSrc = 'pictures/baby-yoda.webp';
@@ -64,6 +73,9 @@ function handleYes() {
     if (btns) btns.innerHTML = `<p class="note">I know that you will agree abba.. 💖</p>`;
   }, 260);
   if (noBtn) noBtn.disabled = true;
+
+  // Delay SMS navigation so UI updates are visible before any navigation occurs
+  setTimeout(() => sendSmsLink('Someone clicked YES on your valentine page'), 300);
 }
 
 function pushNo() {
@@ -119,8 +131,8 @@ function spawnHearts(count = 4) {
 }
 
 function handleNo() {
-  // notify via SMS (opens SMS composer on user's device)
-  sendSmsLink('Someone clicked NO on your valentine page');
+  // Update UI first, then attempt to open SMS composer on mobile (delayed)
+  // We delay SMS navigation so that DOM changes complete and are visible.
   pushNo();
 
   // For first 5 clicks → grow YES exponentially
@@ -163,5 +175,8 @@ function handleNo() {
     }
 
     if (noBtn) noBtn.disabled = true;
+
+    // Delay SMS navigation so UI updates finish
+    setTimeout(() => sendSmsLink('Someone clicked NO on your valentine page'), 300);
   }
 }

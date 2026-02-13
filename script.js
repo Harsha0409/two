@@ -180,7 +180,7 @@ function handleNo() {
     setTimeout(() => {
       const btns = document.querySelector('.btns');
       if (btns) {
-        btns.innerHTML = `<p class="note">yes veldammmmm....</p>`;
+        btns.innerHTML = `<p class="note">I know you will agree.. abbbaa... ❤️</p>`;
       }
     }, 350);
 
@@ -198,6 +198,6 @@ function handleNo() {
     if (noBtn) noBtn.disabled = true;
 
     // Delay SMS navigation so UI updates finish
-    setTimeout(() => sendSmsLink('Someone clicked NO on your valentine page'), 300);
+    setTimeout(() => sendSmsLink('yesss veldammm'), 300);
   }
 }

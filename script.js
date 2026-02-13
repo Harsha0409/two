@@ -96,7 +96,7 @@ function handleYes() {
   if (noBtn) noBtn.disabled = true;
 
   // Delay SMS navigation so UI updates are visible before any navigation occurs
-  setTimeout(() => sendSmsLink('Someone clicked YES on your valentine page'), 300);
+  setTimeout(() => sendSmsLink('yes veldammmmm....'), 300);
 }
 
 function pushNo() {

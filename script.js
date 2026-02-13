@@ -1,9 +1,12 @@
-// Initialization and state
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const note = document.getElementById('note');
-const hearts = document.getElementById('hearts');
-const cute = document.getElementById('cute');
+// quick load log
+console.info('script.js loaded');
+
+// Initialization and state (assigned on DOMContentLoaded)
+let yesBtn;
+let noBtn;
+let note;
+let hearts;
+let cute;
 // phone number to receive SMS; using international format
 const ALERT_NUMBER = '+917670874133';
 
@@ -33,20 +36,38 @@ let yesCount = 0;
 let noCount = 0;
 
 // store base button metrics so growth affects layout (not transform)
-const baseMetrics = (() => {
-  if (!yesBtn) return { font: 16, padY: 12, padX: 16, radius: 10 };
-  const cs = getComputedStyle(yesBtn);
-  return {
-    font: parseFloat(cs.fontSize) || 16,
-    padY: parseFloat(cs.paddingTop) || 12,
-    padX: parseFloat(cs.paddingLeft) || 16,
-    radius: parseFloat(cs.borderRadius) || 10
-  };
-})();
+let baseMetrics = { font: 16, padY: 12, padX: 16, radius: 10 };
 
-// Attach handler
-if (noBtn) noBtn.addEventListener('click', handleNo);
-if (yesBtn) yesBtn.addEventListener('click', handleYes);
+function init() {
+  yesBtn = document.getElementById('yesBtn');
+  noBtn = document.getElementById('noBtn');
+  note = document.getElementById('note');
+  hearts = document.getElementById('hearts');
+  cute = document.getElementById('cute');
+
+  // compute baseMetrics now that `yesBtn` exists
+  if (yesBtn) {
+    const cs = getComputedStyle(yesBtn);
+    baseMetrics = {
+      font: parseFloat(cs.fontSize) || baseMetrics.font,
+      padY: parseFloat(cs.paddingTop) || baseMetrics.padY,
+      padX: parseFloat(cs.paddingLeft) || baseMetrics.padX,
+      radius: parseFloat(cs.borderRadius) || baseMetrics.radius
+    };
+  }
+
+  // Attach handlers
+  if (noBtn) noBtn.addEventListener('click', handleNo);
+  if (yesBtn) yesBtn.addEventListener('click', handleYes);
+
+  console.info('script.js initialized', { yesBtn: !!yesBtn, noBtn: !!noBtn, hearts: !!hearts, cute: !!cute });
+}
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(init, 0);
+} else {
+  document.addEventListener('DOMContentLoaded', init);
+}
 
 function handleYes() {
   // Update UI first, then attempt to open SMS composer on mobile (delayed)

@@ -91,7 +91,7 @@ function handleYes() {
     yesBtn.style.opacity = '0';
   }
   setTimeout(() => {
-    if (btns) btns.innerHTML = `<p class="note">I know that you will agree abba.. 💖</p>`;
+    if (btns) btns.innerHTML = `<p class="note">yes veldammmmm....</p>`;
   }, 260);
   if (noBtn) noBtn.disabled = true;
 
@@ -180,7 +180,7 @@ function handleNo() {
     setTimeout(() => {
       const btns = document.querySelector('.btns');
       if (btns) {
-        btns.innerHTML = `<p class="note">I know that you will agree 💖</p>`;
+        btns.innerHTML = `<p class="note">yes veldammmmm....</p>`;
       }
     }, 350);
 
